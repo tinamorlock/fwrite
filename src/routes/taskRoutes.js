@@ -1,13 +1,12 @@
-// routes/taskRoutes.js
-const express = require('express');
-const { getTasks, createTask, updateTaskById, deleteTaskById } = require('../controllers/taskController');
+import express from 'express';
+import { getTasks, createTask, updateTaskById, deleteTaskById } from '../controllers/taskController.js';
 
 const router = express.Router();
 
 // Define routes
-router.get('/writing-tasks', getTasks);
-router.post('/writing-tasks', createTask);
-router.put('/writing-tasks/:id', updateTaskById);
-router.delete('/writing-tasks/:id', deleteTaskById);
+router.get('/', getTasks);
+router.post('/', createTask);
+router.put('/:id', updateTaskById);
+router.delete('/:id', deleteTaskById);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const pool = require('../db');
+import pool from '../db.js';
 
 // Get all tasks with client details
-const getAllTasks = async () => {
+export const getAllTasks = async () => {
     const res = await pool.query(`
         SELECT tasks.id, tasks.task, tasks.deadline, tasks.wordCountGoal, tasks.status, tasks.paymentStatus, clients.name AS client
         FROM tasks
@@ -11,7 +11,7 @@ const getAllTasks = async () => {
 };
 
 // Add a new task with a client ID
-const addTask = async (task) => {
+export const addTask = async (task) => {
     const res = await pool.query(
         'INSERT INTO tasks (task, client_id, deadline, wordCountGoal, status, paymentStatus) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
         [task.task, task.client_id, task.deadline, task.wordCountGoal, task.status, task.paymentStatus]
@@ -20,7 +20,7 @@ const addTask = async (task) => {
 };
 
 // Update a task by ID
-const updateTask = async (id, updatedTask) => {
+export const updateTask = async (id, updatedTask) => {
     const res = await pool.query(
         'UPDATE tasks SET task = $1, client_id = $2, deadline = $3, wordCountGoal = $4, status = $5, paymentStatus = $6 WHERE id = $7 RETURNING *',
         [updatedTask.task, updatedTask.client_id, updatedTask.deadline, updatedTask.wordCountGoal, updatedTask.status, updatedTask.paymentStatus, id]
@@ -29,8 +29,6 @@ const updateTask = async (id, updatedTask) => {
 };
 
 // Delete a task by ID
-const deleteTask = async (id) => {
+export const deleteTask = async (id) => {
     await pool.query('DELETE FROM tasks WHERE id = $1', [id]);
 };
-
-module.exports = { getAllTasks, addTask, updateTask, deleteTask };

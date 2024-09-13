@@ -1,14 +1,14 @@
-const { getAllTasks, addTask, updateTask, deleteTask } = require('../models/task');
+import { getAllTasks, addTask, updateTask, deleteTask } from '../models/task.js';
 
 // Get all tasks
-const getTasks = (req, res) => {
+export const getTasks = (req, res) => {
     getAllTasks()
         .then(tasks => res.json(tasks))
         .catch(err => res.status(500).json({ error: err.message }));
 };
 
 // Create a new task
-const createTask = (req, res) => {
+export const createTask = (req, res) => {
     const newTask = {
         task: req.body.task,
         client_id: req.body.client_id,  // Now referencing client_id
@@ -24,7 +24,7 @@ const createTask = (req, res) => {
 };
 
 // Update a task by ID
-const updateTaskById = (req, res) => {
+export const updateTaskById = (req, res) => {
     const updatedTask = {
         task: req.body.task,
         client_id: req.body.client_id,  // Updated with client_id
@@ -40,10 +40,8 @@ const updateTaskById = (req, res) => {
 };
 
 // Delete a task by ID
-const deleteTaskById = (req, res) => {
+export const deleteTaskById = (req, res) => {
     deleteTask(req.params.id)
         .then(() => res.status(204).send())
         .catch(err => res.status(500).json({ error: err.message }));
 };
-
-module.exports = { getTasks, createTask, updateTaskById, deleteTaskById };
