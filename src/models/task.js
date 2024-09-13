@@ -10,6 +10,19 @@ export const getAllTasks = async () => {
     return res.rows;
 };
 
+export const getTasksByClientID = async (clientID) => {
+    try {
+        const query = 'SELECT * FROM tasks WHERE client_id = $1';
+        const values = [clientID];
+        const res = await pool.query(query, values);
+        console.log('Query result:', res.rows); // Log the result
+        return res.rows;
+    } catch (err) {
+        console.error('Error fetching tasks by Client ID:', err);
+        throw err;
+    }
+};
+
 // Add a new task with a client ID
 export const addTask = async (task) => {
     const res = await pool.query(

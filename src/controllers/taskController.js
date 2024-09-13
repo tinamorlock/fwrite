@@ -1,4 +1,4 @@
-import { getAllTasks, addTask, updateTask, deleteTask } from '../models/task.js';
+import { getAllTasks, addTask, updateTask, deleteTask, getTasksByClientID } from '../models/task.js';
 
 // Get all tasks
 export const getTasks = (req, res) => {
@@ -6,6 +6,19 @@ export const getTasks = (req, res) => {
         .then(tasks => res.json(tasks))
         .catch(err => res.status(500).json({ error: err.message }));
 };
+
+// Get tasks by client ID
+
+export const fetchTasksByClientID = async (req, res) => {
+    const { clientID } = req.params;
+
+    try {
+        const tasks = await getTasksByClientID(clientID);
+        res.json(tasks);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
 // Create a new task
 export const createTask = (req, res) => {
