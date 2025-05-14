@@ -1,4 +1,4 @@
-import { getAllClients, addClient, updateClient, deleteClient } from '../models/client.js';
+import { getAllClients, addClient, updateClient, deleteClient } from '../../Backup/models/client.js';
 
 // Get all clients
 export const getClients = (req, res) => {

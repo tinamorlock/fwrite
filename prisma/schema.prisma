@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// tables I need to create for Postgres
+
+model Client {
+    id Int @id @default(autoincrement()) // Auto-increments Client ID
+    fname String
+    lname String
+    coname String
+    email String @unique
+    phone String
+    webUrl String
+    stAddress1 String
+    stAddress2 String
+    city String
+    state String
+    zipcode String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    projects Project[] // one to many relationship
+}
+
+model Project {
+    id Int @id @default(autoincrement())
+    tasks Task[] // sets up the one-to-many relationship
+}
+
+
+model Task {
+    id Int @id @default(autoincrement())
+    title String
+    dueDate DateTime
+    completed Boolean @default(False)
+    projectId Int // foreign key
+    project Project @relation(fields: [projectId], references: [id] // Relationship between two tables
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
